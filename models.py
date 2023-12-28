@@ -1,13 +1,4 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-
-db = SQLAlchemy(app)
-app = Flask(__name__)
-migrate = Migrate(app, db)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mercado.db"
-db.init_app(app)
+from __init__ import db
 
 class User(db.Model):
     __tablename__ = "user"
@@ -34,6 +25,9 @@ class Categoria(db.Model):
     
     post = db.relationship('Post', back_populates="categoria")
     postcategoria = db.relationship("PostCategoria", back_populates="categoria")
+    
+    def __repr__(self):
+        return f"{self.id,self.nome,self.descricao}"
 
 class Tag(db.Model):
     __tablename__ = "tag"
@@ -97,7 +91,7 @@ class TipoPostagem(db.Model):
     
     #Aqui em baixo ficará apenas as relações de chaves estrangeiras para melhor leitura.
     
-    post = db.relationship('post', back_populates="tipopostagem")
+    post = db.relationship('Post', back_populates="tipopostagem")
     
 
 class PostCategoria(db.Model):
@@ -110,30 +104,3 @@ class PostCategoria(db.Model):
     
     categoria = db.relationship("Categoria", back_populates="postcategoria")
     post = db.relationship("Post", back_populates="postcategoria")
-    
-    
-     
-     
-      
-    
-
-@app.route('/')
-def page_home():
-    teste = User.query.all()
-    return render_template("index.html", teste=teste)
-
-@app.route('/tela_editor')
-def tela_editor():
-    return render_template("tela_editor.html")
-
-@app.route('/tela_editor/processar_edição', methods =['POST'])
-def processar_edição():
-    return print(f'ok')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/admin')
-def admin():
-    return render_template('admin.html')

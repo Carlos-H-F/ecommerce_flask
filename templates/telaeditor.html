@@ -61,27 +61,24 @@
 		<section>
 			<form action="/tela_editor/processar_edição" method="post">
 				<div>
-					<label for="tittletext">Titulo da Publicação</label>
+					<label for="tittletext"><h1>Titulo da Publicação</h1></label>
 					<textarea name="tittletext" id="tittletext" cols="150" rows="1"></textarea>
 				</div>
 				<div>
-					<label for="tittletext">Imagem obrigatória da Publicação</label>
+					<label for="tittletext"><h3>Imagem obrigatória da Publicação</h3></label>
 					<input type="file">
 				</div>
+				<div>
+					<h3>Escolha a categoria em que a publicação se encaixa</h3>
+				</div>
+				{% for i in categorias %}
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="opcao1">
-					<label class="form-check-label" for="inlineCheckbox1">1</label>
-				  </div>
-				  <div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="opcao2">
-					<label class="form-check-label" for="inlineCheckbox2">2</label>
-				  </div>
-				  <div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="opcao3">
-					<label class="form-check-label" for="inlineCheckbox3">3</label>
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox{{i.id}}" value="opcao{{i.id}}">
+					<label class="form-check-label" for="inlineCheckbox{{i.id}}">{{i.id}} - {{i.nome}} - {{i.descricao}}</label>
 				  </div>
 				<div>
-					<label for="inputtext">Texto da Publicação para preenchimento ou edição.</label>
+				{% endfor %}
+					<label for="inputtext"><h1>Texto da Publicação para preenchimento ou edição.</h1></label>
 					<textarea name="inputtext" id="inputtext" cols="150" rows="50"></textarea>
 				</div>
 				<input type="submit" value="Enviar">
@@ -106,7 +103,7 @@
 					<div class="sidebar-widget">
 						<h3 class="sidebar-title">Categorias</h3>
 						<div class="widget-container">
-							<ul>
+							<ul> <!-- Futura atualização trazendo os HREF direto do banco de dados, momentaneamente ficará estatico-->
 								<li><a href="#">Cultura</a></li>
 								<li><a href="#">Gastronomia</a></li>
 								<li><a href="#">Arte</a></li>
